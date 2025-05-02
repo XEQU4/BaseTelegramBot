@@ -20,7 +20,7 @@ BaseTelegramBot — это готовый шаблон Telegram-бота на б
 
 ## 🛠️ Зависимости
 
-```
+```properties
 aiogram>=3.20.0.post0
 aiosqlite>=0.21.0
 apscheduler>=3.11.0

@@ -20,7 +20,7 @@ BaseTelegramBot is a ready-made Telegram bot template using **aiogram v3**, deve
 
 ## 🛠️ Dependencies
 
-```
+```properties
 aiogram>=3.20.0.post0
 aiosqlite>=0.21.0
 apscheduler>=3.11.0
