@@ -170,17 +170,20 @@ DEFAULT_LANG=en
 
 Basic tests are included using `pytest`.
 
-Run with:
-```bash
-  uv pip install pytest
-  uv run pytest
-  ```
+### 🧼 Run Locally (via uv)
 
-## 🐳 In Docker (via docker-compose)
 ```bash
-  docker-compose build
-  docker-compose run --rm test
-  ```
+   uv pip install pytest
+   uv run pytest
+   ```
+### 🐳 Run in Docker (via docker-compose)
+```bash
+   docker-compose build
+   docker-compose run --rm test
+   ```
+> [!NOTE] ℹ️ Note
+> This runs tests only. To fully launch the bot with Redis and PostgreSQL, use:
+> `docker-compose up --build`
 
 ## ✅ Project Status
 

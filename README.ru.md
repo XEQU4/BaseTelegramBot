@@ -168,17 +168,20 @@ DEFAULT_LANG=en
 
 Базовое тестирование включает использование `pytest`.
 
-Запускаем вместе с:
-```bash
-  uv pip install pytest
-  uv run pytest
-  ```
+### 🧼 Локальный запуск (через `uv`)
 
-## 🐳 В докере (через docker-compose)
 ```bash
-  docker-compose build
-  docker-compose run --rm test
-  ```
+   uv pip install pytest
+   uv run pytest
+   ```
+### 🐳 В докере (через docker-compose)
+```bash
+   docker-compose build
+   docker-compose run --rm test
+   ```
+> [!NOTE] ℹ️ Внимание
+> Это запускает только тесты. Для полного развертывания бота с Redis и PostgreSQL используйте: 
+> `docker-compose up --build`
 
 ## ✅ Статус проекта
 
