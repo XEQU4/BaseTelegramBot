@@ -179,11 +179,12 @@ DEFAULT_LANG=en
    docker-compose build
    docker-compose run --rm test
    ```
-> ℹ️ Внимание
+> ℹ️ **Примечание**
 > 
-> Это запускает только тесты. Для полного развертывания бота с Redis и PostgreSQL используйте: 
->
-> `docker-compose up --build`
+> эта команда запускает только тесты. Чтобы запустить полноценного бота с Redis и PostgreSQL, используйте: 
+> ```bash
+> docker-compose up --build
+> ```
 
 ## ✅ Статус проекта
 

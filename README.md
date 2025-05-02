@@ -181,11 +181,12 @@ Basic tests are included using `pytest`.
    docker-compose build
    docker-compose run --rm test
    ```
-> ℹ️ Note
+> ℹ️ **Note**
 > 
-> This runs tests only. To fully launch the bot with Redis and PostgreSQL, use:
->
-> `docker-compose up --build`
+> this runs tests only. To fully launch the bot with Redis and PostgreSQL, use:
+> ```bash
+> docker-compose up --build
+> ```
 
 ## ✅ Project Status
 
