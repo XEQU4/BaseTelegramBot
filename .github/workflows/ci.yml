@@ -15,13 +15,10 @@ jobs:
         with:
           python-version: '3.13'
 
-      - name: 🛠 Install Rust (for uv)
-        uses: dtolnay/rust-toolchain@stable
-
-      - name: ⚡ Install uv with cargo
+      - name: ⚡ Install uv from official script
         run: |
-          cargo install uv
-          echo "$HOME/.cargo/bin" >> $GITHUB_PATH
+          curl -LsSf https://astral.sh/uv/install.sh | sh
+          echo "$HOME/.local/bin" >> $GITHUB_PATH
 
       - name: 📦 Install dependencies
         run: uv pip install --system
