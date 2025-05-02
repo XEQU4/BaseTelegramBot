@@ -49,7 +49,7 @@ async def add_user_to_db(
     if user_id in user_ids:
         return
 
-    query = f"""
+    query = """
     INSERT INTO user (
         id, username, fullname, lang
     )
