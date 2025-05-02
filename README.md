@@ -34,6 +34,8 @@ apscheduler-di>=0.1.0
 asyncpg>=0.30.0
 dotenv>=0.9.9
 loguru>=0.7.3
+pytest>=8.3.5
+pytest-asyncio>=0.26.0
 python-decouple>=3.8
 pytz>=2025.2
 redis>=6.0.0
@@ -168,7 +170,17 @@ DEFAULT_LANG=en
 
 ## 🧪 Testing
 
-Basic tests are included using `pytest`.
+Basic tests are included using `pytest` and `pytest-asyncio`.
+
+---
+
+> ⚠️ **Before running tests in Docker**, make sure:
+>
+> - Docker Desktop is **installed and running**
+> - You see the 🐳 Docker icon in the system tray (Windows/macOS)
+> - You can run `docker version` without errors
+
+---
 
 ### 🧼 Run Locally (via uv)
 
@@ -181,10 +193,16 @@ Basic tests are included using `pytest`.
    docker-compose build
    docker-compose run --rm test
    ```
+Make sure your Dockerfile contains lines like:
+```
+   RUN pip install pytest pytest-asyncio
+   RUN pip install -e .
+   ```
+
 > ℹ️ **Note**
 > 
 > this runs tests only. To fully launch the bot with Redis and PostgreSQL, use:
-> ```bash
+> ```
 > docker-compose up --build
 > ```
 

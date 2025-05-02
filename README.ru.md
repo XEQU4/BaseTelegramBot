@@ -4,7 +4,7 @@
 ![Aiogram](https://img.shields.io/badge/Aiogram-3.20.0+-green)
 ![PostgreSQL](https://img.shields.io/badge/Database-PostgreSQL-blue)
 
-**📄 Этот README также доступен на [English](./README.en.md)**
+**📄 Этот README также доступен на [English](./README.md)**
 
 BaseTelegramBot — это готовый шаблон Telegram-бота на библиотеке **aiogram v3**, разработанный с учетом лучших практик, включающий поддержку нескольких ролей, локализацию, систему хранения данных в PostgreSQL и Redis, а также встроенный планировщик задач APScheduler с поддержкой DI.
 
@@ -34,6 +34,8 @@ apscheduler-di>=0.1.0
 asyncpg>=0.30.0
 dotenv>=0.9.9
 loguru>=0.7.3
+pytest>=8.3.5
+pytest-asyncio>=0.26.0
 python-decouple>=3.8
 pytz>=2025.2
 redis>=6.0.0
@@ -166,7 +168,13 @@ DEFAULT_LANG=en
 
 ## 🧪 Тестирование
 
-Базовое тестирование включает использование `pytest`.
+В проект включены базовые тесты с использованием `pytest` и `pytest-asyncio`.
+
+> ⚠️ **Перед запуском тестов через Docker** обязательно:
+>
+> - Убедитесь, что Docker Desktop **установлен и запущен**
+> - В системном трее (Windows/macOS) должен отображаться значок 🐳
+> - Команда `docker version` не должна выдавать ошибок
 
 ### 🧼 Локальный запуск (через `uv`)
 
@@ -179,6 +187,12 @@ DEFAULT_LANG=en
    docker-compose build
    docker-compose run --rm test
    ```
+Убедитесь, что ваш Dockerfile содержит:
+```
+   RUN pip install pytest pytest-asyncio
+   RUN pip install -e .
+   ```
+
 > ℹ️ **Примечание**
 > 
 > эта команда запускает только тесты. Чтобы запустить полноценного бота с Redis и PostgreSQL, используйте: 
