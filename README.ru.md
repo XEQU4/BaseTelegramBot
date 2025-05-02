@@ -12,7 +12,7 @@ BaseTelegramBot — это готовый шаблон Telegram-бота на б
 
 Немного примерного взаимодейства с ботом:
 
-![Coming soon](https://via.placeholder.com/600x300?text=Telegram+Bot+Demo)
+![Coming soon](assets/sample.png)
 
 ## 🔧 Стек технологий
 

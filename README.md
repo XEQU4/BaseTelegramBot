@@ -12,7 +12,7 @@ BaseTelegramBot is a ready-made Telegram bot template using **aiogram v3**, deve
 
 Here's a sample interaction with the bot:
 
-![Coming soon](https://via.placeholder.com/600x300?text=Telegram+Bot+Demo)
+![Coming soon](assets/sample.png)
 
 ## 🔧 Tech Stack
 
