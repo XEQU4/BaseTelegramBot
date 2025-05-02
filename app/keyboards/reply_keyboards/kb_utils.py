@@ -2,6 +2,7 @@ from typing import Iterable
 
 from aiogram.types import ReplyKeyboardMarkup, KeyboardButton
 
+from app.config import config
 from app.keyboards.reply_keyboards.texts import BUTTON_TEXTS
 
 
@@ -13,4 +14,4 @@ def create_reply_kb(buttons: Iterable[Iterable[str]], resize: bool = True) -> Re
 
 
 def get_text(code: str, lang: str) -> str:
-    return BUTTON_TEXTS.get(lang, BUTTON_TEXTS["en"]).get(code, str(code))
+    return BUTTON_TEXTS.get(lang, BUTTON_TEXTS[config.DEFAULT_LANG]).get(code, str(code))

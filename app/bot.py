@@ -2,7 +2,7 @@ import asyncio
 import sys
 
 from app import errors
-from app.database import init_db
+from app.database import db
 from app.dispatcher import bot, dp, storage
 from app.handlers import on_startup, on_shutdown, connect_admin, connect_client
 from app.logger import logger
@@ -14,8 +14,13 @@ from app.scheduler.init_sceduler import start_scheduler, scheduler
 async def main() -> None:
     try:
         # Initializing the database
-        await init_db()
-        logger.info("DATA BASE IS SUCCESSFUL CONNECTED.")
+        try:
+            await db.create_pool()
+            await create_tables()
+        except BaseException as e:
+            logger.exception("DATA BASE IS NOT CONNECTED, SO PROCESS WILL BE STOPPED!")
+            raise e
+        logger.info("DATA BASE IS SUCCESSFUL CONNECTED!")
 
         # Skipping all accumulated updates
         await bot.delete_webhook(drop_pending_updates=True)

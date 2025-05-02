@@ -1,3 +1,4 @@
+from app.config import config
 from app.keyboards.inline_keyboards.enums import InlineButton
 from app.keyboards.inline_keyboards.ikb_utils import get_inline_text, create_inline_kb
 
@@ -10,7 +11,7 @@ class IKB:
     """
 
     @staticmethod
-    def client_menu(lang: str = "en"):
+    def client_menu(lang: str = config.DEFAULT_LANG):
         """
         Return an inline keyboard for regular users.
 
@@ -23,7 +24,7 @@ class IKB:
         ])
 
     @staticmethod
-    def admin_menu(lang: str = "en"):
+    def admin_menu(lang: str = config.DEFAULT_LANG):
         """
         Return an inline keyboard for administrators.
 

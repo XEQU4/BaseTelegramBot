@@ -1,7 +1,8 @@
+from app.config import config
 from app.locales.texts import MESSAGES
 
 
-def t(key: str, lang: str = "en", **kwargs) -> str:
+def t(key: str, lang: str = config.DEFAULT_LANG, **kwargs) -> str:
     """
     Get translated text with optional formatting.
 
@@ -10,5 +11,5 @@ def t(key: str, lang: str = "en", **kwargs) -> str:
     :param kwargs: Variables for formatting like {name=...}
     :return: Translated and formatted string
     """
-    template = MESSAGES.get(lang, MESSAGES["en"]).get(key, key)
+    template = MESSAGES.get(lang, MESSAGES[config.DEFAULT_LANG]).get(key, key)
     return template.format(**kwargs)

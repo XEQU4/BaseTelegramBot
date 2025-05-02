@@ -1,101 +1,115 @@
-from app.database.database_functions import execute, fetch_all_data, fetch_one_row_data
+from app.database import db
+from app.logger import logger
 
 
-async def get_user(user_id: int | str) -> list | bool:
-    """Get user data from Data Base."""
-    query = f"""
-    SELECT * 
-    FROM `user`
-    WHERE id = '{user_id}'
-    """  # noqa: S608
+@logger.catch
+async def get_users_from_db(user_id: str | int = None) -> list[dict] | dict | None:
+    """
+    [\n
+        {'id': 1, 'username': 'john_doe', 'fullname': 'John Doe', 'lang': 'en'},\n
+        {'id': 2, 'username': 'jane_smith', 'fullname': 'Jane Smith', 'lang': 'fr'},\n
+        {'id': 3, 'username': 'alisa_vladimir', 'fullname': 'Alisa Vladimir', 'lang': 'ru'}]\n
+        {'id': 4, 'username': 'max_john', 'fullname': 'Max John', 'lang': 'en-US'}]\n
+        . . .\n
+    ]
+    """
+    pool = await db.get_pool()
 
-    user: list | bool = await fetch_one_row_data(query)
+    if user_id:
+        user_id = int(user_id)
+        query = """
+        SELECT * FROM users WHERE user_id = $1
+        """
+        async with pool.acquire() as conn:
+            async with conn.transaction():
+                record = await conn.fetchrow(query,
+                                             user_id)
 
-    return user
+        return dict(record) if record else None
+
+    else:
+        query = """
+        SELECT * FROM users
+        """
+        async with pool.acquire() as conn:
+            async with conn.transaction():
+                records = await conn.fetch(query)
+
+        return [dict(chat_record) for chat_record in records] if records else None
 
 
+@logger.catch
 async def add_user_to_db(
-    user_id: int | str, username: str, fullname: str, lang: str
+        user_id: int | str, username: str, fullname: str, lang: str
 ) -> None:
     """Add new user to Data Base."""
-    user_ids = await get_all_user_ids() or []
+    user_id = int(user_id)
+    user_ids = [user['id'] for user in await get_users_from_db()]
 
     if user_id in user_ids:
         return
 
     query = f"""
-    INSERT INTO `user` (
+    INSERT INTO user (
         id, username, fullname, lang
     )
     VALUES (
-        '{user_id}', '{username}', '{fullname}', '{lang}'
+        $1, $2, $3, $4
     )
     """  # noqa: S608
 
-    await execute(query)
+    pool = await db.get_pool()
+
+    async with pool.acquire() as conn:
+        async with conn.transaction():
+            await conn.execute(query,
+                               user_id,
+                               username,
+                               fullname,
+                               lang)
 
 
+@logger.catch
 async def update_user_data(
-    user_id: int | str, column: str, new_data: int | str
-) -> None:
-    """Update user data in Data Base."""
-    if column == "banned":
-        new_data = bool(new_data)
+        user_id: int | str, column: str, new_data: int | str
+) -> int | None:
+    """Update user data in Data Base. If user not in Database, return user_id."""
+    user_id = int(user_id)
+    if await get_users_from_db(user_id) is None:
+        return int(user_id)
 
-    if isinstance(new_data, str):
-        query = f"""
-        UPDATE `user`
-        SET {column} = '{new_data}'
-        WHERE id = '{user_id}'
-        """  # noqa: S608
-
-    else:
-        query = f"""
-        UPDATE `user`
-        SET {column} = {new_data}
-        WHERE id = '{user_id}'
-        """  # noqa: S608
-
-    await execute(query)
-
-
-async def get_all_users() -> list[list] | list | bool:
-    """Get all users data in Data Base."""
     query = """
-    SELECT *
-    FROM `user`
-    """
+            UPDATE user
+            SET $1 = $2
+            WHERE id = $3
+            """
 
-    users: list[list] | list | bool = await fetch_all_data(query)
+    pool = await db.get_pool()
 
-    return users
-
-
-async def get_all_user_ids() -> list[int] | list:
-    """Get all user_ids in Data Base."""
-    query = """
-    SELECT id
-    FROM `user`
-    """
-
-    user_ids = await fetch_all_data(query)
-
-    if user_ids:
-        user_ids = [int(user_list[0]) for user_list in user_ids]
-
-    return user_ids
+    async with pool.acquire() as conn:
+        async with conn.transaction():
+            await conn.execute(query,
+                               column,
+                               new_data,
+                               user_id)
+    return None
 
 
-async def check_user_in_db(user_id: int | str) -> bool:
+@logger.catch
+async def check_user_in_db(user_id: int) -> bool:
     """Check user in Data Base."""
     user_id = int(user_id)
-    check = await get_user(user_id)
+    user = await get_users_from_db(user_id)
 
-    return bool(check)
+    if user:
+        return True
+    return False
 
 
+@logger.catch
 async def get_lang_from_db(user_id: int | str) -> str:
     """Get user's lang from db."""
-    user = await get_user(user_id)
+    user_id = int(user_id)
+    user = await get_users_from_db(user_id)
 
     return user['lang']
