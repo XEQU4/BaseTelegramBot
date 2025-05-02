@@ -1,4 +1,5 @@
 # BaseTelegramBot
+![CI](https://github.com/XEQU4/BaseTelegramBot/actions/workflows/ci.yml/badge.svg)
 
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![Aiogram](https://img.shields.io/badge/Aiogram-3.20.0+-green)
