@@ -10,25 +10,28 @@ jobs:
       - name: 📥 Checkout repository
         uses: actions/checkout@v3
 
-      - name: 🐍 Set up Python 3.11
+      - name: 🐍 Set up Python 3.13
         uses: actions/setup-python@v4
         with:
-          python-version: '3.11'
+          python-version: '3.13'
 
-      - name: ⚡ Install uv
+      - name: 🛠 Install Rust (for uv)
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: ⚡ Install uv with cargo
         run: |
-          curl -LsSf https://astral.sh/uv/install.sh | sh
+          cargo install uv
           echo "$HOME/.cargo/bin" >> $GITHUB_PATH
 
-      - name: 📦 Install dependencies from uv.lock
+      - name: 📦 Install dependencies
         run: uv pip install --system
 
-      - name: 🧹 Run Ruff linter
+      - name: 🧹 Lint with ruff
         run: |
           uv pip install ruff
           ruff .
 
-      - name: 🧪 Run tests (если каталог tests существует)
+      - name: 🧪 Run tests if present
         run: |
           if [ -d tests ]; then
             uv pip install pytest
