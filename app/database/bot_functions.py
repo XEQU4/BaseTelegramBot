@@ -1,5 +1,3 @@
-import sys
-
 from app.database import db
 from app.logger import logger
 
