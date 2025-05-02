@@ -10,6 +10,9 @@ EXPOSE 8008
 # Install the UV package manager
 RUN pip install --no-cache-dir uv
 
+# Install test dependencies
+RUN pip install pytest
+
 # Copy dependency management files to the container
 COPY pyproject.toml uv.lock ./
 

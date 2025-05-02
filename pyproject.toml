@@ -12,6 +12,7 @@ dependencies = [
     "asyncpg>=0.30.0",
     "dotenv>=0.9.9",
     "loguru>=0.7.3",
+    "pytest>=8.3.5",
     "python-decouple>=3.8",
     "pytz>=2025.2",
     "redis>=6.0.0",

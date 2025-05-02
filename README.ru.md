@@ -8,6 +8,12 @@
 
 BaseTelegramBot — это готовый шаблон Telegram-бота на библиотеке **aiogram v3**, разработанный с учетом лучших практик, включающий поддержку нескольких ролей, локализацию, систему хранения данных в PostgreSQL и Redis, а также встроенный планировщик задач APScheduler с поддержкой DI.
 
+## 🖼️ Демонстрация
+
+Немного примерного взаимодейства с ботом:
+
+![Coming soon](https://via.placeholder.com/600x300?text=Telegram+Bot+Demo)
+
 ## 🔧 Стек технологий
 
 - **Aiogram 3.20.0+**
@@ -94,6 +100,7 @@ DEFAULT_LANG=en
 
 ## 📂 Структура проекта
 ```
+├── .github/            # Рабочие процессы и тесты push на GitHub
 ├── app/                # Основной модуль приложения
 │ ├── database/         # Работа с базой данных и создание таблиц
 │ ├── errors/           # Обработка ошибок
@@ -110,12 +117,16 @@ DEFAULT_LANG=en
 │ ├── config.py         # Загрузка и парсинг переменных окружения
 │ ├── dispatcher.py     # Настройка бота, диспетчера
 │ └── test.py           # Тестовые вызовы
+├── assets/             # Демонстрационные скриншоты и GIF-файлы
+├── tests/              # Набор тестов Pytest
 ├── .env                # Переменные окружения
 ├── .env.example        # Пример .env
+├── docker-compose.yml  # Docker Compose для тестирования локального стека
 ├── Dockerfile          # Docker конфигурация
 ├── pyproject.toml      # Зависимости (используется UV)
 ├── uv.lock             # Лок-файл зависимостей
-└── README.md           # Документация проекта
+├── README.ru.md        # Документация проекта (Русский)
+└── README.md           # Документация проекта (Английский)
 ```
 ## 🚀 Запуск проекта (без Docker)
 
@@ -152,6 +163,22 @@ DEFAULT_LANG=en
    ```bash
    docker run -d --env-file .env telegram-bot
    ```
+
+## 🧪 Тестирование
+
+Базовое тестирование включает использование `pytest`.
+
+Запускаем вместе с:
+```bash
+  uv pip install pytest
+  uv run pytest
+  ```
+
+## 🐳 В докере (через docker-compose)
+```bash
+  docker-compose build
+  docker-compose run --rm test
+  ```
 
 ## ✅ Статус проекта
 

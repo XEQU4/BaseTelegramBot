@@ -8,6 +8,12 @@
 
 BaseTelegramBot is a ready-made Telegram bot template using **aiogram v3**, developed with best practices in mind. It includes support for multiple roles, localization, PostgreSQL and Redis data storage, and an integrated task scheduler powered by APScheduler with DI support.
 
+## 🖼️ Demo
+
+Here's a sample interaction with the bot:
+
+![Coming soon](https://via.placeholder.com/600x300?text=Telegram+Bot+Demo)
+
 ## 🔧 Tech Stack
 
 - **Aiogram 3.20.0+**
@@ -95,6 +101,7 @@ DEFAULT_LANG=en
 ## 📂 Project Structure
 
 ```
+├── .github/            # GitHub Actions workflows and tests
 ├── app/                # Main application module
 │ ├── database/         # DB interactions and table creation
 │ ├── errors/           # Error handlers
@@ -111,12 +118,16 @@ DEFAULT_LANG=en
 │ ├── config.py         # Loads env variables
 │ ├── dispatcher.py     # Dispatcher and middleware setup
 │ └── test.py           # Test script
+├── assets/             # Demo screenshots and GIFs
+├── tests/              # Pytest test suite
 ├── .env                # Environment config
 ├── .env.example        # Sample .env file
+├── docker-compose.yml  # Docker Compose for local stack testing
 ├── Dockerfile          # Docker config
 ├── pyproject.toml      # Dependencies (for UV)
 ├── uv.lock             # Lock file
-└── README.md           # Project documentation
+├── README.ru.md        # Project documentation (Russian)
+└── README.md           # Project documentation (English)
 ```
 
 ## 🚀 Running the Project (Without Docker)
@@ -154,6 +165,22 @@ DEFAULT_LANG=en
    ```bash
    docker run -d --env-file .env telegram-bot
    ```
+
+## 🧪 Testing
+
+Basic tests are included using `pytest`.
+
+Run with:
+```bash
+  uv pip install pytest
+  uv run pytest
+  ```
+
+## 🐳 In Docker (via docker-compose)
+```bash
+  docker-compose build
+  docker-compose run --rm test
+  ```
 
 ## ✅ Project Status
 
