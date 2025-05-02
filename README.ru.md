@@ -11,9 +11,10 @@ BaseTelegramBot — это готовый шаблон Telegram-бота на б
 
 ## 🖼️ Демонстрация
 
-Немного примерного взаимодейства с ботом:
+🔄 Что происходит при запуске, команде /start и завершении работы (для администратора и пользователя)
 
-![Coming soon](assets/sample.png)
+![Coming soon](assets/ru_admin.png)
+![Coming soon](assets/ru_client.png)
 
 ## 🔧 Стек технологий
 

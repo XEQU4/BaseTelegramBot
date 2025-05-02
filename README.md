@@ -11,9 +11,10 @@ BaseTelegramBot is a ready-made Telegram bot template using **aiogram v3**, deve
 
 ## 🖼️ Demo
 
-Here's a sample interaction with the bot:
+🔄 What happens during startup, /start command, and shutdown (for both admin and user):
 
-![Coming soon](assets/sample.png)
+![Coming soon](assets/en_admin.png)
+![Coming soon](assets/en_client.png)
 
 ## 🔧 Tech Stack
 

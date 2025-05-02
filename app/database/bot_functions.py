@@ -1,3 +1,5 @@
+import sys
+
 from app.database import db
 from app.logger import logger
 
@@ -18,7 +20,7 @@ async def get_users_from_db(user_id: str | int = None) -> list[dict] | dict | No
     if user_id:
         user_id = int(user_id)
         query = """
-        SELECT * FROM users WHERE user_id = $1
+        SELECT * FROM "user" WHERE id = $1
         """
         async with pool.acquire() as conn:
             async with conn.transaction():
@@ -29,13 +31,13 @@ async def get_users_from_db(user_id: str | int = None) -> list[dict] | dict | No
 
     else:
         query = """
-        SELECT * FROM users
+        SELECT * FROM "user"
         """
         async with pool.acquire() as conn:
             async with conn.transaction():
                 records = await conn.fetch(query)
 
-        return [dict(chat_record) for chat_record in records] if records else None
+        return [dict(chat_record) for chat_record in records] if records else []
 
 
 @logger.catch
@@ -50,7 +52,7 @@ async def add_user_to_db(
         return
 
     query = """
-    INSERT INTO user (
+    INSERT INTO "user" (
         id, username, fullname, lang
     )
     VALUES (
@@ -79,7 +81,7 @@ async def update_user_data(
         return int(user_id)
 
     query = """
-            UPDATE user
+            UPDATE "user"
             SET $1 = $2
             WHERE id = $3
             """
