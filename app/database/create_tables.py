@@ -15,7 +15,7 @@ async def create_tables() -> None:
         try:
             async with conn.transaction():
                 query = """
-                        CREATE TABLE IF NOT EXISTS user (
+                        CREATE TABLE IF NOT EXISTS "user" (
                             id BIGINT PRIMARY KEY,
                             username VARCHAR(32),
                             fullname TEXT,

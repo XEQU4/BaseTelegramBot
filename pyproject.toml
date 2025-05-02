@@ -17,5 +17,6 @@ dependencies = [
     "redis>=6.0.0",
     "ruff>=0.11.7",
     "setuptools>=80.1.0",
+    "six>=1.17.0",
     "sqlalchemy>=2.0.40",
 ]

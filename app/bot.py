@@ -2,17 +2,20 @@ import asyncio
 import sys
 
 from app import errors
-from app.database import db
+from app.database import db, create_tables
 from app.dispatcher import bot, dp, storage
 from app.handlers import on_startup, on_shutdown, connect_admin, connect_client
-from app.logger import logger
+from app.logger import init_logger, logger
 from app.middlewares import LoggerMiddleware, UserInDbOrNot
 from app.redis.init_redis import redis_client
-from app.scheduler.init_sceduler import start_scheduler, scheduler
+from app.scheduler.init_scheduler import start_scheduler, scheduler
 
 
 async def main() -> None:
     try:
+        # Initializing the Logger
+        init_logger()
+
         # Initializing the database
         try:
             await db.create_pool()
@@ -50,7 +53,11 @@ async def main() -> None:
         # Cleanup: close Redis, storage, and scheduler
         await storage.close()
         await redis_client.aclose()
-        await scheduler.shutdown()
+        if scheduler and hasattr(scheduler, "shutdown") and callable(scheduler.shutdown):
+            try:
+                await scheduler.shutdown()
+            except Exception as e:
+                logger.warning(f"Scheduler shutdown skipped: {e}")
         logger.info("✅ ALL RESOURCES CLEANED UP")
 
 

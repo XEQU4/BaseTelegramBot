@@ -11,6 +11,7 @@ class Config:
         ADMINS (list[int]): List of admin user IDs (split by "/").
         BOT_TOKEN (str): Telegram bot token.
         REDIS_URL (str): Redis connection string.
+        REDIS_URL_SCHEDULER (str): Redis connection string (scheduler).
         POSTGRES_URL (str): Postgres connection string.
         SUPPORTED_LANGS (set[str]): Set of supported language codes (e.g. {"en", "ru"}).
         DEFAULT_LANG (str): Default language code used when detection fails or is unsupported.
@@ -24,6 +25,7 @@ class Config:
 
         self.BOT_TOKEN = os.getenv("BOT_TOKEN")
         self.REDIS_URL = os.getenv("REDIS_URL")
+        self.REDIS_URL_SCHEDULER = os.getenv("REDIS_URL_SCHEDULER")
         self.POSTGRES_URL = os.getenv("POSTGRES_URL")
         self.DEFAULT_LANG = os.getenv("DEFAULT_LANG", "en")
         self.SUPPORTED_LANGS = set(
@@ -35,6 +37,9 @@ class Config:
 
         if not self.REDIS_URL:
             raise ValueError("REDIS_URL is missing in .env")
+
+        if not self.REDIS_URL_SCHEDULER:
+            raise ValueError("REDIS_URL_SCHEDULER is missing in .env")
 
         if not self.POSTGRES_URL:
             raise ValueError("POSTGRES_URL is missing in .env")

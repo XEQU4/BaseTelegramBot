@@ -3,7 +3,7 @@ from aiogram.client.default import DefaultBotProperties
 from aiogram.enums import ParseMode
 
 from app.config import config
-from app.redis import storage
+from app.redis.init_redis import storage
 
 # Initialize Bot instance with a default parse mode, which will be passed to all API calls.
 bot = Bot(config.BOT_TOKEN, default=DefaultBotProperties(parse_mode=ParseMode.HTML))
