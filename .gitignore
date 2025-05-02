@@ -5,6 +5,7 @@
 __pycache__/
 *.py[cod]
 *$py.class
+*.pyc
 
 # Ignore uv cache and lock files (optional)
 .uv/
