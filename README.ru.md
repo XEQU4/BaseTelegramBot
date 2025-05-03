@@ -112,7 +112,7 @@ sqlalchemy>=2.0.40
 
 > **✅ Правильно:** ```POSTGRES_URL="postgres://postgres:your_password@postgres:5432/your_database"```
 
-🔐 `username` и `password` в POSTGRES_URL оба должны быть схожи в `docker-compose.yml` файле:
+🔐 `username` и `password` в POSTGRES_URL оба должны как и в `docker-compose.yml` файле:
 
 ```yml
    environment:
