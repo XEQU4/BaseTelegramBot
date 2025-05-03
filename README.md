@@ -83,24 +83,45 @@ And update `.env` → `SUPPORTED_LANGS`
 
 ## 📚 .env File
 
-```env
-# Admin IDs separated by slashes
-ADMINS=123456789/987654321
+```dotenv
+   # Admin IDs separated by slashes
+   ADMINS=admin_id1/admin_id2,...
 
-# Telegram bot token
-BOT_TOKEN="your_bot_token_here"
+   # Telegram bot token
+   BOT_TOKEN="your_bot_token"
 
-# Redis connection strings
-REDIS_URL="redis://user:password@host:port/0"
-REDIS_URL_SCHEDULER="redis://user:password@host:port/1"
+   # Redis connection strings
+   REDIS_URL="redis://<user>:<password>@<host>:<port>/<db>"
+   REDIS_URL_SCHEDULER="redis://<user>:<password>@<host>:<port>/<db>"
 
-# PostgreSQL connection string
-POSTGRES_URL="postgres://username:password@host:port/database"
+   # PostgreSQL connection string
+   POSTGRES_URL="postgres://<user>:<password>@<hostname>:<port>/<your_database>"
 
-# Supported and default languages
-SUPPORTED_LANGS=en,ru
-DEFAULT_LANG=en
+   # Supported and default languages
+   SUPPORTED_LANGS=en,ru
+   DEFAULT_LANG=en
 ```
+
+### Redis in Docker
+When running the project in Docker, use `redis` as the hostname - not `localhost`.
+
+> **✅ Correct:** ```REDIS_URL="redis://redis:6379/0"``` and ```REDIS_URL="redis://redis:6379/1"```
+
+### PostgreSQL in Docker
+Use `postgres` as the hostname, not `localhost`, for PostgreSQL as well.
+
+> **✅ Correct:** ```POSTGRES_URL="postgres://postgres:your_password@postgres:5432/your_database"```
+
+🔐 The `username` and `password` in POSTGRES_URL must match those specified in your `docker-compose.yml` file:
+
+```yml
+   environment:
+      POSTGRES_USER:postgres
+      POSTGRES_PASSWORD:your_password
+      POSTGRES_DB:your_database
+```
+
+If you use different credentials locally, ensure the `.env` file uses the Docker-specific ones when running via Docker Compose.
 
 ## 📂 Project Structure
 
@@ -169,12 +190,23 @@ DEFAULT_LANG=en
    ```bash
    docker run -d --env-file .env telegram-bot
    ```
+> 🧠 Note: The PostgreSQL and Redis services are automatically created via `docker-compose`. All necessary tables will be created on bot launch.
 
 ## 🧪 Testing
 
 Basic tests are included using `pytest` and `pytest-asyncio`.
 
 ---
+
+> For **unit tests**, use fake (non-functional) values:
+> 
+> In `ADMINS` - any integers, e.g. `111111111/222222222`\
+> In `BOT_TOKEN` - any string in token format, e.g. `123456789:fake-token`
+> ```dotenv
+>    ADMINS=111111111/222222222
+>    BOT_TOKEN="123456789:fake-token"
+> ```
+> ❗ These values won't work with the Telegram API — they're used only for testing purposes.
 
 > ⚠️ **Before running tests in Docker**, make sure:
 >

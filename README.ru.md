@@ -83,26 +83,48 @@ sqlalchemy>=2.0.40
 
 ## 📚 .env файл
 
+```dotenv
+   # Список ID админов через слэш
+   ADMINS=123456789/987654321
+
+   # Токен Telegram-бота
+   BOT_TOKEN="your_bot_token_here"
+
+   # Строки подключения к Redis
+   REDIS_URL="redis://user:password@host:port/0"
+   REDIS_URL_SCHEDULER="redis://user:password@host:port/1"
+
+   # Строка подключения к PostgreSQL
+   POSTGRES_URL="postgres://username:password@host:port/database"
+
+   # Поддерживаемые языки и язык по умолчанию
+   SUPPORTED_LANGS=en,ru
+   DEFAULT_LANG=en
 ```
-# Список ID админов через слэш
-ADMINS=123456789/987654321
 
-# Токен Telegram-бота
-BOT_TOKEN="your_bot_token_here"
+### Redis в Docker
+Когда запускаете проект в Docker, используйте `redis` как хост, а не `localhost`
 
-# Строки подключения к Redis
-REDIS_URL="redis://user:password@host:port/0"
-REDIS_URL_SCHEDULER="redis://user:password@host:port/1"
+> **✅ Правильно:** ```REDIS_URL="redis://redis:6379/0"``` и ```REDIS_URL="redis://redis:6379/1"```
 
-# Строка подключения к PostgreSQL
-POSTGRES_URL="postgres://username:password@host:port/database"
+### PostgreSQL в Docker
+Используйте `postgres` как хост, не `localhost`
 
-# Поддерживаемые языки и язык по умолчанию
-SUPPORTED_LANGS=en,ru
-DEFAULT_LANG=en
+> **✅ Правильно:** ```POSTGRES_URL="postgres://postgres:your_password@postgres:5432/your_database"```
+
+🔐 `username` и `password` в POSTGRES_URL оба должны быть схожи в `docker-compose.yml` файле:
+
+```yml
+   environment:
+      POSTGRES_USER:postgres
+      POSTGRES_PASSWORD:your_password
+      POSTGRES_DB:your_database
 ```
+
+Если вы используете другие учётные данные локально, убедитесь, что в файле `.env` указаны специальные данные для Docker, когда вы запускаете проект через Docker Compose. 
 
 ## 📂 Структура проекта
+
 ```
 ├── .github/            # Рабочие процессы и тесты push на GitHub
 ├── app/                # Основной модуль приложения
@@ -132,6 +154,7 @@ DEFAULT_LANG=en
 ├── README.ru.md        # Документация проекта (Русский)
 └── README.md           # Документация проекта (Английский)
 ```
+
 ## 🚀 Запуск проекта (без Docker)
 
 1. Установи [uv](https://github.com/astral-sh/uv) с браузера или вручную с pip:
@@ -167,16 +190,31 @@ DEFAULT_LANG=en
    ```bash
    docker run -d --env-file .env telegram-bot
    ```
+> 🧠 Примечание: Сервисы PostgreSQL и Redis автоматически создаются через `docker-compose`. Все необходимые таблицы будут созданы при запуске бота.
 
 ## 🧪 Тестирование
 
 В проект включены базовые тесты с использованием `pytest` и `pytest-asyncio`.
+
+---
+
+> Для **юнит-тестов** используйте фиктивные (нерабочие) значения:
+> 
+> В `ADMINS` - любые числа, например: `111111111/222222222`\
+> В `BOT_TOKEN` - любая строка в формате токена, например: `123456789:fake-token`
+> ```dotenv
+>    ADMINS=111111111/222222222
+>    BOT_TOKEN="123456789:fake-token"
+> ```
+> ❗ Эти значения не работают с Telegram API — они предназначены только для тестирования.
 
 > ⚠️ **Перед запуском тестов через Docker** обязательно:
 >
 > - Убедитесь, что Docker Desktop **установлен и запущен**
 > - В системном трее (Windows/macOS) должен отображаться значок 🐳
 > - Команда `docker version` не должна выдавать ошибок
+
+---
 
 ### 🧼 Локальный запуск (через `uv`)
 
@@ -198,7 +236,7 @@ DEFAULT_LANG=en
 > ℹ️ **Примечание**
 > 
 > эта команда запускает только тесты. Чтобы запустить полноценного бота с Redis и PostgreSQL, используйте: 
-> ```bash
+> ```
 > docker-compose up --build
 > ```
 
