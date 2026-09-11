@@ -15,7 +15,7 @@ class LanguageService:
     """
 
     @staticmethod
-    def normalize(lang_code: str, fallback: str = None) -> str:
+    def normalize(lang_code: str, fallback: str | None = None) -> str:
         """
         Normalize and validate a language code.
 
@@ -75,7 +75,7 @@ class LanguageService:
                 if enable_db_sync:
                     await update_user_data(user.id, "lang", lang)
                     logger.info(f"User {user.id} language updated to '{lang}' in DB.")
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 logger.warning(f"Failed to update user {user.id} language in DB: {e}")
 
         return lang

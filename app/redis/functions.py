@@ -1,7 +1,7 @@
 from app.redis.redis_client import redis_client
 
 
-async def set_redis_value(key: str, value: str, timeout: int = None) -> None:
+async def set_redis_value(key: str, value: str, timeout: int | None = None) -> None:
     """
     Set or update a key in Redis.
 

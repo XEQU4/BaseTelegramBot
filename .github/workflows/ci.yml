@@ -1,4 +1,4 @@
-name: BaseTelegramBot CI
+name: aiogram-bot-template CI
 
 on: [push, pull_request]
 
@@ -28,7 +28,7 @@ jobs:
 
       - name: 🧹 Lint with ruff
         run: |
-          uv pip install ruff
+          uv sync
           uv run ruff check .
 
       - name: 🛠️ Prepare .env

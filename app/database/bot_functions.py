@@ -3,7 +3,7 @@ from app.logger import logger
 
 
 @logger.catch
-async def get_users_from_db(user_id: str | int = None) -> list[dict] | dict | None:
+async def get_users_from_db(user_id: str | int | None = None) -> list[dict] | dict | None:
     """
     [\n
         {'id': 1, 'username': 'john_doe', 'fullname': 'John Doe', 'lang': 'en'},\n
@@ -101,9 +101,7 @@ async def check_user_in_db(user_id: int) -> bool:
     user_id = int(user_id)
     user = await get_users_from_db(user_id)
 
-    if user:
-        return True
-    return False
+    return bool(user)
 
 
 @logger.catch

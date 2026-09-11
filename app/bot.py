@@ -20,9 +20,9 @@ async def main() -> None:
         try:
             await db.create_pool()
             await create_tables()
-        except BaseException as e:
+        except BaseException:
             logger.exception("DATA BASE IS NOT CONNECTED, SO PROCESS WILL BE STOPPED!")
-            raise e
+            raise
         logger.info("DATA BASE IS SUCCESSFUL CONNECTED!")
 
         # Skipping all accumulated updates
@@ -56,7 +56,7 @@ async def main() -> None:
         if scheduler and hasattr(scheduler, "shutdown") and callable(scheduler.shutdown):
             try:
                 await scheduler.shutdown()
-            except Exception as e:
+            except Exception as e:  # noqa: BLE001
                 logger.warning(f"Scheduler shutdown skipped: {e}")
         logger.info("✅ ALL RESOURCES CLEANED UP")
 

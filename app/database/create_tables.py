@@ -26,7 +26,7 @@ async def create_tables() -> None:
 
         except exceptions.PostgresError as err:
             logger.exception(f"TABLES ARE NOT CREATED, SO THE BOT IS STOPPED! ERROR - {err}")
-            raise err
+            raise
 
         else:
             logger.info("ALL TABLES HAVE BEEN CREATED IN THE DATABASE!")

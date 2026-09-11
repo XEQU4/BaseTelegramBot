@@ -29,7 +29,7 @@ class UserInDbOrNot(BaseMiddleware):
                 lang = LanguageService.get_from_user(user)
                 await add_user_to_db(user.id, user.username, user.full_name, lang)
                 logger.info(f"New user added: {user.full_name} (@{user.username}) [{user.id}]")
-        except Exception as e:
+        except Exception as e:  # noqa: BLE001
             logger.error(f"DB error while checking user {user.id}: {e}")
 
         if state:

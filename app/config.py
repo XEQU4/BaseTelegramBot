@@ -28,9 +28,9 @@ class Config:
         self.REDIS_URL_SCHEDULER = os.getenv("REDIS_URL_SCHEDULER")
         self.POSTGRES_URL = os.getenv("POSTGRES_URL")
         self.DEFAULT_LANG = os.getenv("DEFAULT_LANG", "en")
-        self.SUPPORTED_LANGS = set(
+        self.SUPPORTED_LANGS = {
             lang.strip().lower() for lang in os.getenv("SUPPORTED_LANGS", "en").split(",")
-        )
+        }
 
         if not self.BOT_TOKEN:
             raise ValueError("BOT_TOKEN is missing in .env")
